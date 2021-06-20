@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo1</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-bind:[c]="rrr" v-bind:disabled="isDisabled">{{message}}</h1>
+        <input v-bind:disabled="isDisabled"/><br>
+        <span v-once>{{count}}</span><br>
+        <span>{{count}}</span><br>
+        <span v-html="tvhtml" v-bind:href="url"></span>
+        <button v-on:click="onclick">点点试试</button>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello world',
+                count: 1,
+                tvhtml: '<span class="green">你好</span>',
+                rrr: {"red": true, "green": true},
+                isDisabled: true,
+                url: "www.baidu.com",
+                c: "class",
+            }
+        },
+        methods: {
+            onclick() {
+                this.isDisabled = false;
+            },
+        },
+        mounted() {
+            setInterval(()=>{
+                this.count++;
+            }, 1000)
+        },
+        // template: `
+        // <h1 class="red">{{message}}</h1>
+        // `,
+    });
+    app.mount("#app");
+    // const oth = Vue.createApp({
+    //     data() {
+    //         return {
+    //             info: "nihao",
+    //         }
+    //     },
+    //     methods: {
+    //         show() {
+    //             this.info = "hahah";
+    //         },
+    //     },
+    //     template: `
+    //     <h1 class="green">{{info}}</h1><br>
+    //     <button @click="show">点点试试</button>
+    //     `,
+    // });
+    // oth.mount("#oth");
+</script>
+<style>
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+</style>
+</html>
