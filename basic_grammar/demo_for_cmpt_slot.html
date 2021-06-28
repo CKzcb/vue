@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.1.2/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: "hi~",
+            }
+        },
+        methods: {
+            handleClick(){
+                this.message = this.message === 'hi~'? '': "hi~";
+            }
+        },
+        template:`
+        <h1>插槽显示</h1>
+        <h1 @click="handleClick">修改插槽</h1>
+        <show-info>{{message}}</show-info>
+        <show-info></show-info>
+        <ju-ming>
+            <template v-slot:footer-slot>这是页脚</template>    
+            <template v-slot:top-slot>这是页头</template>
+        </ju-ming>
+        <h1>循环操作</h1>
+        <xun-huan>
+        <template v-slot:default="item"><h2>{{item.item}}</h2></template>    
+        </xun-huan>
+        `
+    })
+
+    app.component("showInfo", {
+        template:`
+        <h2>显示</h2>
+        <slot>jyx</slot>
+        `
+    })
+
+    app.component("juMing", {
+        template: `
+        <div><slot name="top-slot"></slot></div>
+        <div><slot name="footer-slot"></slot></div>
+        `
+    })
+
+    app.component("xunHuan", {
+        data() {
+            return {
+                members: ['lc', 'zcb'],
+            }
+        },
+        template: `
+        <slot v-for="item in members" :item=item />
+        `
+    })
+
+    app.mount("#app")
+</script>
+</html>
