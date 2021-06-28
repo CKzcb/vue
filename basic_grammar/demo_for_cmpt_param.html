@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>参数校验</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.1.2/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            name: "",
+            age: 0,
+            counter: 0
+        }
+    },
+    methods: {
+        handleClick(num){
+            this.counter += num;
+        }
+    },
+    template:`    <show-info :name="name" :age="age" :counter="counter" class="red" @add="handleClick"></show-info>
+    <input type="text" v-model="name"/><br>
+    <input type="text" v-model="age"/><br>
+    <h1 @add="handleClick">点一下</h1>
+    <show-info :name="name" :age="age" :counter="counter" class="red" @add="handleClick"></show-info>
+    `
+});
+
+app.component("showInfo", {
+    props: {
+        name: String,
+        age: Number,
+        counter: Number,
+    },
+    emits: ["add"],
+    methods: {
+        handleClick() {
+            this.$emit('add', 2);
+        }
+    },
+    inheritAttrs: false,
+    template: `<div>show : name is {{name}} age is {{age}} </div>
+    {{counter}}<button @click="handleClick">增加数量</button>`
+});
+
+app.mount("#app");
+</script>
+<style>
+    .red{
+        color: red;
+    };
+    .green{
+        color: green;
+    };
+</style>
+</html>
